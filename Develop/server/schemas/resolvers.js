@@ -1,6 +1,6 @@
 
 const { User } = require('../models');
-const { signToken } = require('../auth');  // Assuming you have a signToken function for JWT
+const { signToken } = require('../auth');  
 const bcrypt = require('bcryptjs');  // For password hashing
 
 const resolvers = {

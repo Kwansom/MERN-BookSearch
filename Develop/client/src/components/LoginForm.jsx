@@ -1,8 +1,7 @@
-// see SignupForm.js for comments
 import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutations"; // Import the loginUser mutation
+import { useMutation } from "@apollo/client"; // Import useMutation
+import { LOGIN_USER } from "../utils/mutations"; // Import the LOGIN_USER mutation
 import Auth from "../utils/auth"; // For storing the token and managing authentication
 
 const LoginForm = () => {
@@ -10,8 +9,8 @@ const LoginForm = () => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  // Apollo useMutation hook to perform the login mutation
-  const [loginUser, { error }] = useMutation(LOGIN_USER);
+  // Use Apollo's useMutation hook for login
+  const [loginUser] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,7 +20,7 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form is valid (react-bootstrap validation)
+    // Check if form is valid
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -29,7 +28,7 @@ const LoginForm = () => {
     }
 
     try {
-      // Perform the login mutation
+      // Execute the LOGIN_USER mutation
       const { data } = await loginUser({
         variables: {
           email: userFormData.email,
@@ -37,16 +36,14 @@ const LoginForm = () => {
         },
       });
 
-      // If successful, store the token and user info
       const { token, user } = data.login;
       Auth.login(token); // Store token in localStorage
-      console.log(user); // Optionally log user data for debugging
     } catch (err) {
       console.error(err);
       setShowAlert(true); // Show error alert
     }
 
-    // Reset the form
+    // Reset form after submission
     setUserFormData({
       email: "",
       password: "",
@@ -64,6 +61,7 @@ const LoginForm = () => {
         >
           Something went wrong with your login credentials!
         </Alert>
+
         <Form.Group className="mb-3">
           <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control

@@ -9,13 +9,14 @@ const { authMiddleware } = require("../server/utils/auth");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// instance of ApolloServer
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
     // used to get user from token
     const user = authMiddleware({ req });
-    return { user }; // Return user
+    return { user }; // Return user in context for GraphQL resolvers
   },
 });
 
