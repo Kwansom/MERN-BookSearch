@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@apollo/client"; // Import necessary hooks
+import { useQuery, useMutation } from "@apollo/client"; 
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { GET_ME } from "../utils/queries"; // Import GET_ME query
@@ -7,8 +7,8 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  const { loading, data } = useQuery(GET_ME); // Use the useQuery hook to get user data
-  const [removeBook] = useMutation(REMOVE_BOOK); // Set up the REMOVE_BOOK mutation
+  const { loading, data } = useQuery(GET_ME); 
+  const [removeBook] = useMutation(REMOVE_BOOK);
 
   // Check if user data is loaded
   if (loading) {
