@@ -24,7 +24,7 @@ const typeDefs = gql`
   type Query {
     me: User # Get the current authenticated user
   }
-  # Mutations for writing/updating data  
+  # Mutations for writing/updating data
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth

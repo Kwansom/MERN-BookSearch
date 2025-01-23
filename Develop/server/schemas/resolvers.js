@@ -1,16 +1,15 @@
-
-const { User } = require('../models');
-const { signToken } = require('../auth');  
-const bcrypt = require('bcryptjs');  // For password hashing
+const { User } = require("../models");
+const { signToken } = require("../utils/auth");
+const bcrypt = require("bcryptjs"); // For password hashing
 
 const resolvers = {
   Query: {
     // The "me" query returns the currently authenticated user's data
     me: async (parent, args, context) => {
       if (!context.user) {
-        throw new Error('Not authenticated');
+        throw new Error("Not authenticated");
       }
-      return await User.findById(context.user._id);  // Retrieve user data based on the JWT user info
+      return await User.findById(context.user._id); // Retrieve user data based on the JWT user info
     },
   },
 
@@ -19,12 +18,12 @@ const resolvers = {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw new Error('No user found with this email');
+        throw new Error("No user found with this email");
       }
 
       const isCorrectPassword = await bcrypt.compare(password, user.password);
       if (!isCorrectPassword) {
-        throw new Error('Incorrect password');
+        throw new Error("Incorrect password");
       }
 
       const token = signToken(user);
@@ -45,13 +44,15 @@ const resolvers = {
       context
     ) => {
       if (!context.user) {
-        throw new Error('Not authenticated');
+        throw new Error("Not authenticated");
       }
 
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
         {
-          $addToSet: { savedBooks: { bookId, authors, description, title, image, link } },
+          $addToSet: {
+            savedBooks: { bookId, authors, description, title, image, link },
+          },
         },
         { new: true }
       );
@@ -62,7 +63,7 @@ const resolvers = {
     // The "removeBook" mutation removes a book from the user's saved books array
     removeBook: async (parent, { bookId }, context) => {
       if (!context.user) {
-        throw new Error('Not authenticated');
+        throw new Error("Not authenticated");
       }
 
       const updatedUser = await User.findByIdAndUpdate(

@@ -16,7 +16,8 @@ module.exports = {
     }
 
     if (!token) {
-      throw new Error({ message: "You have no token!" });
+      return req;
+      // throw new Error({ message: "You have no token!" });
     }
 
     // verify token and get user data out of it
@@ -25,10 +26,11 @@ module.exports = {
       req.user = data;
     } catch (err) {
       console.log("Invalid token");
-      return res.status(400).json({ message: "invalid token!" });
+      return req;
+      // return res.status(400).json({ message: "invalid token!" });
     }
     
-    return req.user;
+    return req;
 
   },
   signToken: function ({ username, email, _id }) {

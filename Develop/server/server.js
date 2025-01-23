@@ -16,7 +16,7 @@ const server = new ApolloServer({
   context: ({ req }) => {
     // used to get user from token
     const user = authMiddleware({ req });
-    return { user }; // Return user in context for GraphQL resolvers
+    return user; // Return user in context for GraphQL resolvers
   },
 });
 
